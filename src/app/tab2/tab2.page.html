@@ -1,17 +1,57 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Synonyms and antonyms
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showHistory()">History</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-input placeholder="Enter a word" [(ngModel)]="searchTerm"></ion-input>
+  </ion-item>
+  <ion-button (click)="searchWord()">Search</ion-button>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div *ngIf="wordSyn">
+    <h2>{{ wordSyn.word }}</h2>
+
+    <ion-card *ngIf="wordSyn.synonyms && wordSyn.synonyms.length > 0">
+      <ion-card-header>
+        <ion-card-title>Synonyms</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3" *ngFor="let synonym of wordSyn.synonyms">
+              <p>{{ '\u2022' }} {{ synonym }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="wordAnt && wordAnt.antonyms && wordAnt.antonyms.length > 0">
+      <ion-card-header>
+        <ion-card-title>Antonyms</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3" *ngFor="let antonym of wordAnt.antonyms">
+              <p>{{ '\u2022' }} {{ antonym }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+
 </ion-content>

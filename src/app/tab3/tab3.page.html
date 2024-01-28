@@ -1,17 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Rhymes
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showHistory()">History</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item>
+    <ion-input placeholder="Enter a word" [(ngModel)]="searchTerm"></ion-input>
+  </ion-item>
+  <ion-button (click)="searchWord()">Search</ion-button>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <div *ngIf="wordRhyme">
+    <h2>{{ wordRhyme.word }}</h2>
+
+    <ion-card *ngIf="wordRhyme.rhymes.all && wordRhyme.rhymes.all.length > 0">
+      <ion-card-header>
+        <ion-card-title>Rhymes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3" *ngFor="let rhyme of wordRhyme.rhymes.all">
+              <p>{{ '\u2022' }} {{ rhyme }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>
